@@ -20,8 +20,8 @@
     projectId: "toyota-earn-f27fc",
     storageBucket: "toyota-earn-f27fc.firebasestorage.app",
     messagingSenderId: "476246666284",
-    appId: "1:476246666284:web:f297ef0ab0675ea2607589",
-    measurementId: "G-N03448EM2Z"
+    appId: "1:476246666284:web:8810ed581a9bf966607589",
+    measurementId: "G-P3M1YLKERX"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -96,205 +96,38 @@ button:not(:disabled):active{transform:scale(.96);transition-duration:.04s}
 .page.active{display:block}
 @keyframes pageIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-/* =========================================
-   TMDB-STYLE AUTH PAGES (Light Mode)
-   ========================================= */
-.tmdb-auth-wrap {
-  background: #ffffff;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  color: #000000;
-}
-
-.tmdb-header {
-  background: #032541;
-  padding: 16px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.tmdb-logo {
-  color: #ffffff;
-  font-weight: 800;
-  font-size: 20px;
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+/* TMDB AUTH PAGES */
+.tmdb-auth-wrap { background: #ffffff; min-height: 100vh; display: flex; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #000000; }
+.tmdb-header { background: #032541; padding: 16px 20px; display: flex; justify-content: center; align-items: center; }
+.tmdb-logo { color: #ffffff; font-weight: 800; font-size: 20px; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
 .tmdb-logo i { color: #01b4e4; }
-
-.tmdb-auth-content {
-  padding: 30px 24px 40px;
-  max-width: 480px;
-  margin: 0 auto;
-  width: 100%;
-  flex: 1;
-}
-
-.tmdb-title {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 24px;
-  color: #000;
-  letter-spacing: -0.5px;
-}
-
-/* Social Buttons */
-.tmdb-social-btn {
-  width: 100%;
-  padding: 14px;
-  border-radius: 50px;
-  border: 1px solid #d7d7d7;
-  background: #ffffff;
-  color: #000000;
-  font-size: 16px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
+.tmdb-auth-content { padding: 30px 24px 40px; max-width: 480px; margin: 0 auto; width: 100%; flex: 1; }
+.tmdb-title { font-size: 28px; font-weight: 700; margin-bottom: 24px; color: #000; letter-spacing: -0.5px; }
+.tmdb-social-btn { width: 100%; padding: 14px; border-radius: 50px; border: 1px solid #d7d7d7; background: #ffffff; color: #000000; font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 12px; cursor: pointer; transition: background 0.2s; }
 .tmdb-social-btn:active { background: #f4f4f4; }
 .tmdb-social-btn i { font-size: 18px; }
 .tmdb-social-btn .fa-google { color: #4285F4; }
 .tmdb-social-btn .fa-apple { color: #000000; }
 .tmdb-social-btn .fa-envelope { color: #000000; }
-
-/* Divider */
-.tmdb-divider {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  margin: 24px 0;
-}
-.tmdb-divider::before, .tmdb-divider::after {
-  content: '';
-  flex: 1;
-  border-bottom: 1px solid #d7d7d7;
-}
-.tmdb-divider span {
-  padding: 0 16px;
-  color: #666;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-/* Inputs */
-.tmdb-input-group {
-  position: relative;
-  margin-bottom: 16px;
-}
-.tmdb-input {
-  width: 100%;
-  padding: 16px 20px;
-  border-radius: 50px;
-  border: 1px solid transparent;
-  background: #f4f4f4;
-  font-size: 16px;
-  color: #000;
-  outline: none;
-  font-family: inherit;
-  transition: border-color 0.2s, background 0.2s;
-}
+.tmdb-divider { display: flex; align-items: center; text-align: center; margin: 24px 0; }
+.tmdb-divider::before, .tmdb-divider::after { content: ''; flex: 1; border-bottom: 1px solid #d7d7d7; }
+.tmdb-divider span { padding: 0 16px; color: #666; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; }
+.tmdb-input-group { position: relative; margin-bottom: 16px; }
+.tmdb-input { width: 100%; padding: 16px 20px; border-radius: 50px; border: 1px solid transparent; background: #f4f4f4; font-size: 16px; color: #000; outline: none; font-family: inherit; transition: border-color 0.2s, background 0.2s; }
 .tmdb-input::placeholder { color: #767676; }
-.tmdb-input:focus {
-  border-color: #01b4e4;
-  background: #ffffff;
-}
-.tmdb-eye {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #999;
-  cursor: pointer;
-  font-size: 16px;
-  background: none;
-  border: none;
-  padding: 5px;
-}
-
-/* Submit Button */
-.tmdb-submit {
-  width: 100%;
-  padding: 16px;
-  border-radius: 50px;
-  background: #01b4e4;
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
-  margin-top: 10px;
-  margin-bottom: 24px;
-  transition: background 0.2s;
-}
+.tmdb-input:focus { border-color: #01b4e4; background: #ffffff; }
+.tmdb-eye { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #999; cursor: pointer; font-size: 16px; background: none; border: none; padding: 5px; }
+.tmdb-submit { width: 100%; padding: 16px; border-radius: 50px; background: #01b4e4; color: #ffffff; font-size: 18px; font-weight: 700; border: none; cursor: pointer; margin-top: 10px; margin-bottom: 24px; transition: background 0.2s; }
 .tmdb-submit:active { background: #0099c2; }
 .tmdb-submit.loading { opacity: 0.7; pointer-events: none; }
-
-/* Footer Links */
-.tmdb-footer-links {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.tmdb-footer-links a, .tmdb-footer-links span {
-  color: #01b4e4;
-  text-decoration: none;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-}
-.tmdb-footer-links p {
-  color: #666;
-  font-size: 15px;
-  margin: 0;
-}
-.tmdb-footer-links p span {
-  font-weight: 700;
-}
-
-.tmdb-terms {
-  font-size: 13px;
-  color: #666;
-  line-height: 1.5;
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
+.tmdb-footer-links { text-align: center; display: flex; flex-direction: column; gap: 16px; }
+.tmdb-footer-links a, .tmdb-footer-links span { color: #01b4e4; text-decoration: none; font-size: 15px; font-weight: 500; cursor: pointer; }
+.tmdb-footer-links p { color: #666; font-size: 15px; margin: 0; }
+.tmdb-footer-links p span { font-weight: 700; }
+.tmdb-terms { font-size: 13px; color: #666; line-height: 1.5; text-align: center; margin-top: 20px; margin-bottom: 20px; }
 .tmdb-terms a { color: #01b4e4; text-decoration: none; }
-
-/* Error messages */
-.tmdb-error {
-  display: none;
-  color: #e5484d;
-  font-size: 13px;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 16px;
-  background: rgba(229,72,77,0.1);
-  padding: 10px;
-  border-radius: 8px;
-}
-.tmdb-success {
-  display: none;
-  color: #01b4e4;
-  font-size: 13px;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 16px;
-  background: rgba(1,180,228,0.1);
-  padding: 10px;
-  border-radius: 8px;
-}
+.tmdb-error { display: none; color: #e5484d; font-size: 13px; font-weight: 600; text-align: center; margin-bottom: 16px; background: rgba(229,72,77,0.1); padding: 10px; border-radius: 8px; }
+.tmdb-success { display: none; color: #01b4e4; font-size: 13px; font-weight: 600; text-align: center; margin-bottom: 16px; background: rgba(1,180,228,0.1); padding: 10px; border-radius: 8px; }
 
 /* HERO CAROUSEL */
 .hero-carousel{position:relative;margin:0 0 6px;aspect-ratio:16/10;overflow:hidden;background:#000}
@@ -536,6 +369,30 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
 .vp-footer{padding:10px 16px calc(12px + env(safe-area-inset-bottom));background:rgba(10,9,8,.9);border-top:1px solid var(--line);flex-shrink:0;display:flex;justify-content:center;gap:8px}
 .vp-dl{padding:11px 22px;background:var(--brand);color:#0a0908;border-radius:10px;font-weight:800;font-size:13px;display:flex;align-items:center;gap:8px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;text-decoration:none;}
 
+/* THE YOUTUBE OVERLAY FIX */
+#vpMediaArea {
+  position: relative;
+}
+#ytFrame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000;
+}
+/* This transparent block covers the top 60px of the YouTube player where the title/logo lives */
+#vpMediaArea::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 10;
+  background: transparent;
+}
+
 /* BOTTOM NAV */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:1000;max-width:520px;margin:0 auto;background:rgba(22,21,26,.95);backdrop-filter:blur(20px);border-top:1px solid var(--line-2);padding:10px 8px calc(14px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:space-around}
 .bottom-nav .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:6px 0;color:var(--ink-4);background:none;border:none;position:relative}
@@ -660,9 +517,9 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
       <button class="vp-close" onclick="closeVideoPlayer()"><i class="fas fa-times"></i></button>
     </div>
     
-    <div id="vpMediaArea" style="flex:1;min-height:0;position:relative;background:#000;display:flex">
-      <video id="videoElement" controls playsinline webkit-playsinline x5-playsinline preload="auto" controlsList="nodownload" onerror="handleVideoError()"></video>
-      <iframe id="ytFrame" style="display:none;position:absolute;inset:0;width:100%;height:100%;border:0;background:#000" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <div id="vpMediaArea" style="flex:1;min-height:0;display:flex;">
+      <video id="videoElement" controls playsinline webkit-playsinline x5-playsinline preload="auto" controlsList="nodownload" onerror="handleVideoError()" style="flex:1;width:100%;background:#000;object-fit:contain;min-height:0;max-height:100%"></video>
+      <iframe id="ytFrame" style="display:none" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
 
     <div class="vp-footer" id="vpFooter">
@@ -1152,9 +1009,6 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
 <script>
 'use strict';
 
-/* ============================================================
-   CONFIG
-   ============================================================ */
 const ADMIN_PHONE = '707256946';
 const ADMIN_PASS = '2005';
 const ADMIN_USERNAME = 'MUSA';
@@ -1228,9 +1082,6 @@ const SEED_MOVIES = [
   }
 ];
 
-/* ============================================================
-   STATE
-   ============================================================ */
 const STATE = {
   users: [],
   movies: [],
@@ -1258,9 +1109,6 @@ let _suspendTargetPhone = null;
 let firebaseUnsubscribe = null;
 let currentAdminTab = 'movies';
 
-/* ============================================================
-   UTILITIES
-   ============================================================ */
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 function genId(p){ return (p||'id')+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,8); }
 function normPhone(p){ let s=String(p||'').replace(/\D/g,''); if(s.startsWith('0'))s=s.slice(1); if(s.startsWith('256')&&s.length>9)s=s.slice(3); return s; }
@@ -1305,9 +1153,6 @@ function applyCustomCode(){
   }
 }
 
-/* ============================================================
-   CLOUD SYNC & AUTH
-   ============================================================ */
 async function cloudLoad(){
   if (!window.firebaseDB) return false;
   try {
@@ -1393,9 +1238,6 @@ function startFirebaseListener(){
 window.addEventListener('online', () => { document.getElementById('offlineBanner').classList.remove('show'); cloudSync(); });
 window.addEventListener('offline', () => { document.getElementById('offlineBanner').classList.add('show'); });
 
-/* ============================================================
-   MODALS / TOASTS
-   ============================================================ */
 function openModal(id){ const el = document.getElementById(id); if (el) el.classList.add('active'); }
 function closeModal(id){ const el = document.getElementById(id); if (el) el.classList.remove('active'); }
 
@@ -1431,9 +1273,6 @@ function showSuspensionAlert(user){
   openModal('suspensionAlert');
 }
 
-/* ============================================================
-   YOUTUBE VIDEO HELPER
-   ============================================================ */
 function getYouTubeId(url) {
   if (!url) return null;
   const u = String(url).trim();
@@ -1452,9 +1291,6 @@ function getYouTubeId(url) {
   return null;
 }
 
-/* ============================================================
-   VIDEO PLAYER & DOWNLOAD
-   ============================================================ */
 function playFirstVj(movieId){
   const m = STATE.movies.find(x => x.id === movieId);
   if (!m || !m.vjLinks || m.vjLinks.length === 0) {
@@ -1484,18 +1320,20 @@ function playMovie(movieId, vjIndex){
   const ytId    = getYouTubeId(url);
 
   if (ytId) {
+    // YouTube Mode (Hides Logo/Title using nocookie & CSS overlay)
     try { videoEl.pause(); } catch (e) {}
     videoEl.removeAttribute('src');
     videoEl.load();
     videoEl.style.display = 'none';
     
-    ytEl.src = 'https://www.youtube.com/embed/' + ytId + '?playsinline=1&rel=0&modestbranding=1&autoplay=1';
+    ytEl.src = 'https://www.youtube-nocookie.com/embed/' + ytId + '?playsinline=1&rel=0&modestbranding=1&autoplay=1&iv_load_policy=3';
     ytEl.style.display = 'block';
     
     footer.style.display = 'none'; 
     currentVideoUrl = '';
     currentVideoName = '';
   } else {
+    // Native Video Mode
     ytEl.src = 'about:blank';
     ytEl.style.display = 'none';
     videoEl.style.display = '';
@@ -1586,9 +1424,6 @@ function downloadFromCard(url, filename) {
   downloadVideo(url, filename);
 }
 
-/* ============================================================
-   ANNOUNCEMENT
-   ============================================================ */
 function renderAnnouncementModal(){
   const ann = STATE.announcement || DEFAULT_ANNOUNCEMENT;
   const titleEl = document.getElementById('announcementTitle');
@@ -1604,9 +1439,6 @@ function renderAnnouncementModal(){
   `).join('');
 }
 
-/* ============================================================
-   AUTH
-   ============================================================ */
 function togglePw(id){
   const i = document.getElementById(id);
   if (!i) return;
@@ -1959,9 +1791,6 @@ function showCpError(msg){
   document.getElementById('cpError').style.display = 'block';
 }
 
-/* ============================================================
-   NAVIGATION
-   ============================================================ */
 const PAGES = ['loginPage','registerPage','homePage','browsePage','movieDetailPage','favoritesPage','profilePage','changePasswordPage','adminPage'];
 
 function showPage(id){
@@ -2012,9 +1841,6 @@ function goBack(){
   else showPage('homePage');
 }
 
-/* ============================================================
-   HOME / HERO
-   ============================================================ */
 function loadHome(){
   if (!currentUser) return;
   renderHero();
@@ -2126,9 +1952,6 @@ function movieCardHtml(m){
   `;
 }
 
-/* ============================================================
-   BROWSE
-   ============================================================ */
 function loadBrowse(){
   renderGenreRow();
   renderBrowseGrid();
@@ -2177,9 +2000,6 @@ function renderBrowseGrid(){
   grid.innerHTML = list.map(movieCardHtml).join('');
 }
 
-/* ============================================================
-   MOVIE DETAIL
-   ============================================================ */
 function openMovieDetail(id){
   const m = STATE.movies.find(x => x.id === id);
   if (!m) return;
@@ -2244,9 +2064,6 @@ function updateFavButton(){
     : '<i class="far fa-heart"></i> <span>Add to Favorites</span>';
 }
 
-/* ============================================================
-   FAVORITES
-   ============================================================ */
 function isFavorite(movieId){
   if (!currentUser) return false;
   return (currentUser.favorites || []).includes(movieId);
@@ -2288,9 +2105,6 @@ function loadFavorites(){
   el.innerHTML = `<div class="movie-grid">${movies.map(movieCardHtml).join('')}</div>`;
 }
 
-/* ============================================================
-   PROFILE
-   ============================================================ */
 function loadProfile(){
   if (!currentUser) return;
   document.getElementById('profAvatar').textContent = (currentUser.username || 'U').slice(0, 2).toUpperCase();
@@ -2299,9 +2113,6 @@ function loadProfile(){
   document.getElementById('profFavCount').textContent = (currentUser.favorites || []).length + ' favorites';
 }
 
-/* ============================================================
-   ADMIN
-   ============================================================ */
 function loadAdmin(){
   if (!currentUser || !currentUser.isAdmin) { showPage('homePage'); return; }
   const isManager = !!currentUser.isMovieManager;
@@ -2802,9 +2613,6 @@ function adminSaveCustomCode(){
   setTimeout(() => { msg.style.display = 'none'; }, 2500);
 }
 
-/* ============================================================
-   INIT
-   ============================================================ */
 async function init(){
   loadStateLocal();
 
@@ -2877,9 +2685,6 @@ async function init(){
   setupAdminVjRow();
 }
 
-/* ============================================================
-   GLOBAL LISTENERS
-   ============================================================ */
 document.addEventListener('click', e => {
   ['confirmModal','suspensionAlert','suspendModal','welcomeAnnouncementModal','emailLinkModal'].forEach(id => {
     const el = document.getElementById(id);
@@ -2909,9 +2714,6 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-/* ============================================================
-   IMAGE VIEWER
-   ============================================================ */
 function openImageViewer(src){
   const modal = document.getElementById('imageViewerModal');
   document.getElementById('viewerImage').src = src;
