@@ -12,7 +12,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-  import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCy4wWAJU2FvkUTAIUwwJbiVal6ZMV6psM",
@@ -29,7 +29,11 @@
   const auth = getAuth(app);
   const docRef = doc(db, "appData", "musaSonsMovieLibraryV10");
 
-  window.firebaseDB = { docRef, getDoc, setDoc, onSnapshot, auth, GoogleAuthProvider, signInWithPopup };
+  window.firebaseDB = { 
+    docRef, getDoc, setDoc, onSnapshot, 
+    auth, GoogleAuthProvider, signInWithPopup, 
+    sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink 
+  };
 </script>
 
 <style>
@@ -628,6 +632,23 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
   <button class="mb-btn" style="background:transparent;color:#fff;border:1px solid var(--line-2)" onclick="cancelSuspend()">Cancel</button>
 </div></div>
 
+<!-- EMAIL LINK MODAL -->
+<div class="overlay" id="emailLinkModal">
+  <div class="modal-box">
+    <div class="modal-icon"><i class="fas fa-envelope"></i></div>
+    <div class="mb-title">Sign in with Email</div>
+    <div class="mb-msg">Enter your email and we'll send you a magic link to sign in instantly.</div>
+    
+    <input type="email" id="emailLinkInput" class="admin-input" placeholder="your@email.com" style="margin-bottom:12px; text-align:center; background:#fff; color:#000; border-color:#d7d7d7;">
+    
+    <div id="emailLinkError" class="tmdb-error" style="display:none; margin-bottom:12px;"></div>
+    <div id="emailLinkSuccess" class="tmdb-success" style="display:none; margin-bottom:12px;"></div>
+    
+    <button class="mb-btn" id="emailLinkBtn" onclick="handleSendEmailLink()">Send Magic Link</button>
+    <button class="mb-btn" style="background:transparent;color:#fff;border:1px solid var(--line-2)" onclick="closeModal('emailLinkModal')">Cancel</button>
+  </div>
+</div>
+
 <!-- VIDEO PLAYER MODAL -->
 <div class="overlay" id="videoPlayerModal">
   <div class="video-player-box">
@@ -639,7 +660,6 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
       <button class="vp-close" onclick="closeVideoPlayer()"><i class="fas fa-times"></i></button>
     </div>
     
-    <!-- Video Area -->
     <div id="vpMediaArea" style="flex:1;min-height:0;position:relative;background:#000;display:flex">
       <video id="videoElement" controls playsinline webkit-playsinline x5-playsinline preload="auto" controlsList="nodownload" onerror="handleVideoError()"></video>
       <iframe id="ytFrame" style="display:none;position:absolute;inset:0;width:100%;height:100%;border:0;background:#000" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
@@ -689,7 +709,6 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
 <!-- LOGIN -->
 <div id="loginPage" class="page">
   <div class="tmdb-auth-wrap">
-    <!-- Top Dark Header -->
     <div class="tmdb-header">
       <div class="tmdb-logo"><i class="fas fa-film"></i> MUSA & SONS</div>
     </div>
@@ -697,20 +716,18 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
     <div class="tmdb-auth-content">
       <h1 class="tmdb-title">Login</h1>
 
-      <!-- Social Logins -->
       <button id="googleLoginBtn" class="tmdb-social-btn" onclick="handleGoogleLogin()">
         <i class="fab fa-google"></i> Continue with Google
       </button>
       <button class="tmdb-social-btn" onclick="showToast('Social login coming soon!', 'info')">
         <i class="fab fa-apple"></i> Continue with Apple
       </button>
-      <button class="tmdb-social-btn" onclick="showToast('Email login coming soon!', 'info')">
+      <button class="tmdb-social-btn" onclick="openModal('emailLinkModal')">
         <i class="fas fa-envelope"></i> Email me a sign-in link
       </button>
 
       <div class="tmdb-divider"><span>OR</span></div>
 
-      <!-- Form -->
       <form onsubmit="event.preventDefault();handleLogin();">
         <div class="tmdb-input-group">
           <input type="tel" id="loginPhone" class="tmdb-input" placeholder="Phone Number" inputmode="tel" autocomplete="tel" />
@@ -726,7 +743,6 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
         <button class="tmdb-submit" id="loginBtn" type="submit">Login</button>
       </form>
 
-      <!-- Footer Links -->
       <div class="tmdb-footer-links">
         <a href="#" onclick="showToast('Password reset disabled in demo', 'info')">Reset password</a>
         <a href="#" onclick="showToast('Verification email disabled in demo', 'info')">Resend Verification Email</a>
@@ -739,7 +755,6 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
 <!-- REGISTER -->
 <div id="registerPage" class="page">
   <div class="tmdb-auth-wrap">
-    <!-- Top Dark Header -->
     <div class="tmdb-header">
       <div class="tmdb-logo"><i class="fas fa-film"></i> MUSA & SONS</div>
     </div>
@@ -747,7 +762,6 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
     <div class="tmdb-auth-content">
       <h1 class="tmdb-title">Sign Up</h1>
 
-      <!-- Social Logins -->
       <button class="tmdb-social-btn" onclick="handleGoogleLogin()">
         <i class="fab fa-google"></i> Continue with Google
       </button>
@@ -757,7 +771,6 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
 
       <div class="tmdb-divider"><span>OR</span></div>
 
-      <!-- Form -->
       <form onsubmit="event.preventDefault();handleRegister();">
         <div class="tmdb-input-group">
           <input type="text" id="regUsername" class="tmdb-input" placeholder="Username" autocomplete="username" />
@@ -791,7 +804,6 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
         <button class="tmdb-submit" id="regBtn" type="submit">Sign Up</button>
       </form>
 
-      <!-- Footer Links -->
       <div class="tmdb-footer-links">
         <p>Already have an account? <span onclick="showPage('loginPage')">Login</span></p>
       </div>
@@ -1075,7 +1087,6 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
   <div id="adminToolsTab" class="admin-card" style="display:none">
     <div class="admin-card-title"><i class="fas fa-sliders-h"></i> Admin Tools</div>
 
-    <!-- RESTORE SAMPLE MOVIES TOOL -->
     <div class="admin-action-group">
       <div class="aag-title"><i class="fas fa-magic"></i> Fix Missing Video Links</div>
       <div style="font-size:11.5px;color:var(--ink-3);font-weight:600;margin-bottom:12px;line-height:1.5">
@@ -1144,8 +1155,8 @@ select.admin-input{appearance:none;-webkit-appearance:none;background-image:url(
 /* ============================================================
    CONFIG
    ============================================================ */
-const ADMIN_PHONE = '707256946'; // 0707256946
-const ADMIN_PASS = '2005'; // Full-control administrator (existing account)
+const ADMIN_PHONE = '707256946';
+const ADMIN_PASS = '2005';
 const ADMIN_USERNAME = 'MUSA';
 
 const GENRES = ['Action','Comedy','Drama','Thriller','Horror','Sci-Fi','Romance','Adventure','Animation','Crime','Documentary','Nigerian','Korean','Indian'];
@@ -1473,7 +1484,6 @@ function playMovie(movieId, vjIndex){
   const ytId    = getYouTubeId(url);
 
   if (ytId) {
-    // YouTube mode
     try { videoEl.pause(); } catch (e) {}
     videoEl.removeAttribute('src');
     videoEl.load();
@@ -1482,11 +1492,10 @@ function playMovie(movieId, vjIndex){
     ytEl.src = 'https://www.youtube.com/embed/' + ytId + '?playsinline=1&rel=0&modestbranding=1&autoplay=1';
     ytEl.style.display = 'block';
     
-    footer.style.display = 'none'; // YouTube links cannot be downloaded directly
+    footer.style.display = 'none'; 
     currentVideoUrl = '';
     currentVideoName = '';
   } else {
-    // Native video mode
     ytEl.src = 'about:blank';
     ytEl.style.display = 'none';
     videoEl.style.display = '';
@@ -1677,6 +1686,109 @@ async function handleGoogleLogin() {
     
     if (error.code !== 'auth/popup-closed-by-user' && error.code !== 'auth/cancelled-popup-request') {
       showToast(error.message || 'Google Sign-In failed', 'error');
+    }
+  }
+}
+
+async function handleSendEmailLink() {
+  const email = document.getElementById('emailLinkInput').value.trim();
+  const btn = document.getElementById('emailLinkBtn');
+  const err = document.getElementById('emailLinkError');
+  const success = document.getElementById('emailLinkSuccess');
+  
+  err.style.display = 'none';
+  success.style.display = 'none';
+
+  if (!email || !email.includes('@')) {
+    err.textContent = 'Please enter a valid email address';
+    err.style.display = 'block';
+    return;
+  }
+
+  if (!window.firebaseDB || !window.firebaseDB.sendSignInLinkToEmail) return;
+
+  const { auth, sendSignInLinkToEmail } = window.firebaseDB;
+  
+  const actionCodeSettings = {
+    url: window.location.origin + window.location.pathname, 
+    handleCodeInApp: true,
+  };
+
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  try {
+    await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+    window.localStorage.setItem('emailForSignIn', email);
+    
+    success.textContent = 'Link sent! Check your inbox (and spam folder).';
+    success.style.display = 'block';
+    document.getElementById('emailLinkInput').value = '';
+    
+    setTimeout(() => closeModal('emailLinkModal'), 2500);
+  } catch (error) {
+    console.error('Email Link Error:', error);
+    err.textContent = error.message || 'Failed to send link. Try again.';
+    err.style.display = 'block';
+  } finally {
+    btn.textContent = 'Send Magic Link';
+    btn.disabled = false;
+  }
+}
+
+async function checkEmailLinkSignIn() {
+  if (!window.firebaseDB || !window.firebaseDB.isSignInWithEmailLink) return;
+  
+  const { auth, isSignInWithEmailLink, signInWithEmailLink } = window.firebaseDB;
+  
+  if (isSignInWithEmailLink(auth, window.location.href)) {
+    let email = window.localStorage.getItem('emailForSignIn');
+    
+    if (!email) {
+      email = window.prompt('Please provide your email for confirmation');
+    }
+    
+    try {
+      const result = await signInWithEmailLink(auth, email, window.location.href);
+      window.localStorage.removeItem('emailForSignIn');
+      
+      const user = result.user;
+      const pseudoPhone = 'email_' + user.uid.substring(0, 8); 
+      
+      let existingUser = STATE.users.find(u => u.email === user.email || u.phone === pseudoPhone);
+
+      if (!existingUser) {
+        existingUser = {
+          id: genId('u'),
+          username: user.email.split('@')[0],
+          email: user.email,
+          phone: pseudoPhone, 
+          password: 'EMAIL_LINK_AUTH',
+          isAdmin: false,
+          favorites: [],
+          registrationDate: new Date().toISOString(),
+          suspended: false
+        };
+        STATE.users.push(existingUser);
+        debouncedSave();
+      }
+
+      if (existingUser.suspended) {
+        showSuspensionAlert(existingUser);
+        return;
+      }
+
+      sessionSave(SS_CURRENT, existingUser);
+      currentUser = existingUser;
+      
+      showToast('Signed in with Email successfully', 'success');
+      window.history.replaceState({}, document.title, window.location.pathname);
+      
+      enterApp();
+
+    } catch (error) {
+      console.error('Email Link Sign In Error:', error);
+      showToast('Invalid or expired link. Please try again.', 'error');
     }
   }
 }
@@ -1885,7 +1997,6 @@ function enterApp(){
     loadHome();
     initHeroCarousel();
     
-    // Only show announcement ONCE per session
     if (sessionStorage.getItem('musasons_show_announcement') !== 'seen') {
       setTimeout(() => {
         openModal('welcomeAnnouncementModal');
@@ -2770,7 +2881,7 @@ async function init(){
    GLOBAL LISTENERS
    ============================================================ */
 document.addEventListener('click', e => {
-  ['confirmModal','suspensionAlert','suspendModal','welcomeAnnouncementModal'].forEach(id => {
+  ['confirmModal','suspensionAlert','suspendModal','welcomeAnnouncementModal','emailLinkModal'].forEach(id => {
     const el = document.getElementById(id);
     if (el && el.classList.contains('active') && e.target === el) el.classList.remove('active');
   });
@@ -2778,7 +2889,7 @@ document.addEventListener('click', e => {
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
-    ['confirmModal','suspensionAlert','suspendModal','welcomeAnnouncementModal'].forEach(id => closeModal(id));
+    ['confirmModal','suspensionAlert','suspendModal','welcomeAnnouncementModal','emailLinkModal'].forEach(id => closeModal(id));
   }
 });
 
@@ -2794,6 +2905,7 @@ window.addEventListener('DOMContentLoaded', () => {
   adminPopulateGenreSelect();
   init().then(() => {
     startFirebaseListener();
+    checkEmailLinkSignIn();
   });
 });
 
