@@ -1282,8 +1282,9 @@ body{background:radial-gradient(ellipse at 50% -15%,rgba(38,111,130,.18),transpa
     </div>
 
     <div class="form-field">
-      <label class="field-label" style="margin-bottom:10px">VJ Version — Play & Download URL *</label>
+      <label class="field-label" style="margin-bottom:10px">Movie Video Link — paste the actual video URL *</label>
       <div id="vjRows"></div>
+      <small style="display:block;color:var(--ink-3);font-size:11px;line-height:1.55;margin-top:8px">Paste a direct MP4, WebM, OGG or HLS (.m3u8) link, or a YouTube video link. The link is saved with this movie and opens in the website player when viewers tap Play. Use a video you own or have permission to stream. A poster/image URL will not play as a movie.</small>
     </div>
 
     <div class="admin-chips" style="margin-bottom:14px">
@@ -2596,7 +2597,7 @@ function setupAdminVjRow(data = {}){
         <input class="vj-quality" placeholder="720p" value="${esc(data.quality || '')}" />
         <input class="vj-size" placeholder="900MB" value="${esc(data.size || '')}" />
       </div>
-      <input class="vj-play-url" placeholder="Play URL — direct .mp4 OR YouTube link" value="${esc((data.playUrl || data.url) && (data.playUrl || data.url) !== '#' ? (data.playUrl || data.url) : '')}" />
+      <input class="vj-play-url" placeholder="Paste movie video link (.mp4 / .webm / .m3u8 / YouTube)" value="${esc((data.playUrl || data.url) && (data.playUrl || data.url) !== '#' ? (data.playUrl || data.url) : '')}" />
       <input class="vj-dl-url" placeholder="Download URL (optional — uses Play URL)" value="${esc(data.downloadUrl && data.downloadUrl !== '#' ? data.downloadUrl : '')}" />
     </div>
   `;
@@ -2663,10 +2664,10 @@ function adminSaveMovie(){
   if (badUrl) return showErr('Play URL must start with http(s)://');
 
   const unrecognized = vjLinks.find(v =>
-    !getYouTubeId(v.playUrl) && !/\.(mp4|webm|ogg|m3u8|mov)(\?|$)/i.test(v.playUrl)
+    !getYouTubeId(v.playUrl) && !/\.(mp4|webm|ogg|m3u8|mov)(?:[?#]|$)/i.test(v.playUrl)
   );
   if (unrecognized) {
-    return showErr('Play URL must be a direct video (.mp4/.webm) or a YouTube link');
+    return showErr('Video link must be a direct MP4/WebM/OGG/HLS video URL or a YouTube link');
   }
 
   if (editingMovieId !== null) {
