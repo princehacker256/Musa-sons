@@ -4,6 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="theme-color" content="#080d18" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="Musa & Sons" />
+<meta name="application-name" content="Musa & Sons Movie Library" />
 <title>MUSA & SONS MOVIE LIBRARY</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -727,7 +731,66 @@ body{background:radial-gradient(ellipse at 50% -15%,rgba(38,111,130,.18),transpa
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
 
+
+/* LIGHTWEIGHT HOME-SCREEN INSTALL CARD */
+.install-card{position:fixed;top:calc(14px + env(safe-area-inset-top));left:50%;width:min(680px,calc(100% - 28px));margin:0;padding:14px;border:1px solid rgba(228,176,74,.32);border-radius:18px;background:linear-gradient(135deg,rgba(35,31,29,.98),rgba(20,23,32,.98));display:flex;align-items:center;gap:13px;box-shadow:0 14px 38px rgba(0,0,0,.42);z-index:9999;opacity:0;visibility:hidden;pointer-events:none;transform:translate(-50%,-18px);transition:opacity .35s ease,transform .35s ease,visibility .35s ease}
+.install-card.show{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0)}
+.install-card-icon{width:48px;height:48px;flex:0 0 48px;border-radius:14px;background:linear-gradient(135deg,#e4b04a,#c99328);display:flex;align-items:center;justify-content:center;color:#0a0908;font-family:'Bebas Neue',sans-serif;font-size:16px;font-weight:900}
+.install-card-copy{min-width:0;flex:1}.install-card-copy strong{display:block;font-size:13px;letter-spacing:.2px}.install-card-copy span{display:block;color:var(--ink-2);font-size:10.5px;line-height:1.45;margin-top:4px}
+.install-app-btn{flex:0 0 auto;padding:10px 13px;border-radius:11px;background:linear-gradient(135deg,#e4b04a,#c99328);color:#17120a;font-size:11px;font-weight:900;white-space:nowrap}
+.install-app-btn i{margin-right:5px}
+@media(max-width:420px){.install-card{gap:9px;padding:11px}.install-card-icon{width:42px;height:42px;flex-basis:42px}.install-card-copy strong{font-size:11.5px}.install-card-copy span{font-size:9.5px}.install-app-btn{padding:9px 10px;font-size:10px}}
+
+
+/* Install app option inside the account profile */
+.profile-install-card{margin:16px 16px 20px;padding:16px;display:flex;align-items:center;gap:13px;border:1px solid rgba(228,176,74,.28);border-radius:18px;background:linear-gradient(135deg,rgba(35,31,29,.96),rgba(20,27,40,.98));box-shadow:0 10px 26px rgba(0,0,0,.18)}
+.profile-install-icon{width:54px;height:54px;flex:0 0 54px;border-radius:15px;background:linear-gradient(135deg,#e4b04a,#c99328);display:flex;align-items:center;justify-content:center;color:#17120a;font-family:'Bebas Neue',sans-serif;font-size:18px;font-weight:900}
+.profile-install-copy{min-width:0;flex:1}
+.profile-install-copy strong{display:block;color:var(--ink);font-size:14px;font-weight:800}
+.profile-install-copy span{display:block;color:var(--ink-2);font-size:11px;line-height:1.45;margin-top:5px}
+.profile-install-btn{flex:0 0 auto;padding:11px 13px;border-radius:11px;background:linear-gradient(135deg,#e4b04a,#c99328);color:#17120a;font-size:11px;font-weight:900;white-space:nowrap}
+.profile-install-btn i{margin-right:5px}
+@media(max-width:420px){.profile-install-card{margin:14px 16px 18px;padding:12px;gap:9px}.profile-install-icon{width:44px;height:44px;flex-basis:44px;font-size:15px}.profile-install-copy strong{font-size:12px}.profile-install-copy span{font-size:9.5px}.profile-install-btn{padding:9px 10px;font-size:10px}}
 </style>
+
+<style id="install-notification-styles">
+#installNotification{
+  position:fixed; z-index:99999; top:calc(14px + env(safe-area-inset-top));
+  left:16px; right:16px; max-width:760px; margin:0 auto;
+  display:flex; align-items:center; gap:14px; padding:16px;
+  border:1px solid rgba(230,170,35,.38); border-radius:22px;
+  background:linear-gradient(135deg,#202126,#17191f);
+  box-shadow:0 16px 45px rgba(0,0,0,.48);
+  color:#f7f8fc; opacity:0; visibility:hidden;
+  transform:translateY(-22px) scale(.98);
+  transition:opacity .35s ease,transform .35s ease,visibility .35s;
+}
+#installNotification.show{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+#installNotification .in-icon{
+  width:58px;height:58px;flex:0 0 58px;border-radius:17px;
+  display:grid;place-items:center;background:linear-gradient(145deg,#f7bd28,#dc9500);
+  color:#17110a;font-weight:1000;font-size:19px;
+}
+#installNotification .in-copy{min-width:0;flex:1}
+#installNotification .in-copy strong{display:block;font-size:15px;margin-bottom:5px}
+#installNotification .in-copy span{display:block;color:#b8bfcc;font-size:12px;line-height:1.45}
+#installNotification .in-install{
+  border:0;border-radius:14px;padding:12px 15px;background:#efa900;color:#17110a;
+  font-weight:800;white-space:nowrap;font-size:13px;cursor:pointer
+}
+#installNotification .in-close{
+  position:absolute;right:8px;top:6px;border:0;background:transparent;
+  color:#aab0bc;font-size:19px;padding:3px 7px;cursor:pointer
+}
+@media(max-width:390px){
+ #installNotification{left:10px;right:10px;padding:13px;gap:10px}
+ #installNotification .in-icon{width:48px;height:48px;flex-basis:48px}
+ #installNotification .in-copy strong{font-size:13px}
+ #installNotification .in-copy span{font-size:11px}
+ #installNotification .in-install{padding:10px 11px;font-size:12px}
+}
+</style>
+
 </head>
 <body>
 
@@ -975,6 +1038,17 @@ body{background:radial-gradient(ellipse at 50% -15%,rgba(38,111,130,.18),transpa
   </div>
 </div>
 
+
+<div id="installNotification" role="status" aria-live="polite">
+  <div class="in-icon">M&amp;S</div>
+  <div class="in-copy">
+    <strong>Install Musa &amp; Sons</strong>
+    <span>Add a small app icon to your home screen. No APK or large app download.</span>
+  </div>
+  <button class="in-install" type="button" onclick="installLibraryApp()">Install App</button>
+  <button class="in-close" type="button" aria-label="Close notification" onclick="dismissInstallNotification()">×</button>
+</div>
+
 <!-- HOME -->
 <div id="homePage" class="page">
   <div class="app-header">
@@ -1079,6 +1153,14 @@ body{background:radial-gradient(ellipse at 50% -15%,rgba(38,111,130,.18),transpa
       <div class="p-sub"><i class="fas fa-phone"></i> <span id="profPhone">—</span></div>
       <div class="p-sub"><i class="fas fa-heart"></i> <span id="profFavCount">0 favorites</span></div>
     </div>
+  </div>
+  <div class="profile-install-card" id="installCard">
+    <div class="profile-install-icon">M&S</div>
+    <div class="profile-install-copy">
+      <strong>Install Musa & Sons</strong>
+      <span>Add a small app icon to your home screen. No APK or large app download.</span>
+    </div>
+    <button class="profile-install-btn" id="installAppBtn" onclick="installLibraryApp()"><i class="fas fa-download"></i> Install App</button>
   </div>
   <div class="menu-list">
     <button class="menu-item" onclick="showPage('favoritesPage')"><div class="mi-icon" style="background:var(--rose-soft);color:var(--rose)"><i class="fas fa-heart"></i></div><div class="mi-text"><div class="mi-title">My Favorites</div><div class="mi-sub">Movies you've saved</div></div><div class="mi-arrow"><i class="fas fa-chevron-right"></i></div></button>
@@ -3086,6 +3168,87 @@ function closeImageViewer(){
   document.getElementById('imageViewerModal').style.display = 'none';
   document.body.style.overflow = '';
 }
+
+/* ============================================================
+   LIGHTWEIGHT PWA INSTALL (NO APK)
+   The browser creates the home-screen app shortcut.
+   ============================================================ */
+let deferredInstallPrompt = null;
+(function setupLibraryInstall(){
+  const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#e4b04a"/><text x="256" y="302" text-anchor="middle" font-family="Arial,sans-serif" font-size="142" font-weight="900" fill="#0a0908">M&amp;S</text></svg>`;
+  const iconData = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(iconSvg);
+  const manifest = {
+    id: location.pathname, name: 'MUSA & SONS MOVIE LIBRARY', short_name: 'Musa & Sons',
+    description: 'Browse and enjoy movies in Musa & Sons Movie Library.',
+    start_url: location.href.split('#')[0], scope: new URL('.', location.href).pathname,
+    display: 'standalone', orientation: 'portrait', background_color: '#0a0908', theme_color: '#080d18',
+    icons: [{src:iconData,sizes:'192x192',type:'image/svg+xml',purpose:'any'}, {src:iconData,sizes:'512x512',type:'image/svg+xml',purpose:'any'}]
+  };
+  try {
+    const manifestBlob = new Blob([JSON.stringify(manifest)], {type:'application/manifest+json'});
+    const manifestUrl = URL.createObjectURL(manifestBlob);
+    let manifestLink = document.getElementById('libraryManifest');
+    if (!manifestLink) { manifestLink = document.createElement('link'); manifestLink.id = 'libraryManifest'; manifestLink.rel = 'manifest'; document.head.appendChild(manifestLink); }
+    manifestLink.href = manifestUrl;
+  } catch(e) { console.warn('App manifest could not be prepared:', e); }
+
+  window.addEventListener('beforeinstallprompt', event => {
+    event.preventDefault(); deferredInstallPrompt = event;
+    const btn = document.getElementById('installAppBtn');
+    if (btn) btn.innerHTML = '<i class="fas fa-download"></i> Install App';
+  });
+  window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    const btn = document.getElementById('installAppBtn');
+    if (btn) { btn.innerHTML = '<i class="fas fa-check"></i> Installed'; btn.disabled = true; }
+    const card = document.getElementById('installCard');
+    if (card) card.querySelector('.install-card-copy span').textContent = 'Musa & Sons is now added to your home screen.';
+  });
+  const installCard = document.getElementById('installCard');
+  const alreadyInstalled = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+  if (alreadyInstalled) {
+    if (installCard) installCard.style.display = 'none';
+  } else if (installCard) {
+    // The install option is displayed permanently inside the Profile page.
+    installCard.style.display = 'flex';
+  }
+})();
+
+async function installLibraryApp(){
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    const choice = await deferredInstallPrompt.userChoice;
+    if (choice && choice.outcome === 'accepted') deferredInstallPrompt = null;
+    return;
+  }
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const message = isIOS
+    ? 'To add this app: tap the Share button in Safari, then choose “Add to Home Screen”.'
+    : 'To add this small app icon: open this website in Chrome, tap the ⋮ menu, then choose “Install app” or “Add to Home screen”. If that option is not shown, make sure the website is published using HTTPS and try again.';
+  alert(message);
+}
 </script>
+
+<script id="install-notification-behavior">
+(function(){
+  function showInstallNotice(){
+    const notice=document.getElementById('installNotification');
+    if(!notice) return;
+    const installed=(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone===true;
+    if(installed) return;
+    window.setTimeout(function(){
+      notice.classList.add('show');
+      window.setTimeout(function(){ notice.classList.remove('show'); },5000);
+    },2000);
+  }
+  window.dismissInstallNotification=function(){
+    const notice=document.getElementById('installNotification');
+    if(notice) notice.classList.remove('show');
+  };
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',showInstallNotice,{once:true});
+  else showInstallNotice();
+})();
+</script>
+
 </body>
 </html>
